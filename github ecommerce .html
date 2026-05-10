@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>AuraGB Ecommerce</title>
+
+<meta name="viewport"
+content="width=device-width, initial-scale=1.0">
+
+<style>
+
+body{
+
+    margin:0;
+    padding:20px;
+    background:#f2f2f2;
+    font-family:Arial;
+
+}
+
+.container{
+
+    background:white;
+    padding:20px;
+    border-radius:10px;
+
+}
+
+h1{
+
+    text-align:center;
+
+}
+
+/* AuraGB Inputs */
+
+.agb-input{
+
+    width:100%;
+    padding:12px;
+    margin-top:12px;
+
+    border:1px solid gray;
+    border-radius:5px;
+
+    font-size:16px;
+    box-sizing:border-box;
+
+}
+
+/* Product Box */
+
+.product{
+
+    border:1px solid gray;
+    padding:15px;
+    margin-top:15px;
+    border-radius:10px;
+    background:#fafafa;
+
+}
+
+.product h3{
+
+    margin:0;
+
+}
+
+.product p{
+
+    margin:10px 0;
+
+}
+
+/* Button */
+
+button{
+
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+
+    border:none;
+    border-radius:5px;
+
+    background:#003366;
+    color:white;
+
+    font-size:16px;
+
+}
+
+/* Cart Table */
+
+table{
+
+    width:100%;
+    border-collapse:collapse;
+    margin-top:20px;
+
+}
+
+th,
+td{
+
+    border:1px solid black;
+    padding:10px;
+    text-align:center;
+
+}
+
+th{
+
+    background:#003366;
+    color:white;
+
+}
+
+.total{
+
+    margin-top:15px;
+    font-size:20px;
+    font-weight:bold;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<h1>AuraGB Ecommerce Store</h1>
+
+<input
+class="agb-input"
+type="text"
+placeholder="Search Product">
+
+<!-- PRODUCT 1 -->
+
+<div class="product">
+
+<h3>Mobile Phone</h3>
+
+<p>Price: ₹15000</p>
+
+<button onclick="addCart('Mobile Phone',15000)">
+
+Add To Cart
+
+</button>
+
+</div>
+
+<!-- PRODUCT 2 -->
+
+<div class="product">
+
+<h3>Laptop</h3>
+
+<p>Price: ₹45000</p>
+
+<button onclick="addCart('Laptop',45000)">
+
+Add To Cart
+
+</button>
+
+</div>
+
+<!-- PRODUCT 3 -->
+
+<div class="product">
+
+<h3>Headphones</h3>
+
+<p>Price: ₹2000</p>
+
+<button onclick="addCart('Headphones',2000)">
+
+Add To Cart
+
+</button>
+
+</div>
+
+<h2>Shopping Cart</h2>
+
+<table id="cartTable">
+
+<tr>
+
+<th>Product</th>
+<th>Price</th>
+
+</tr>
+
+</table>
+
+<div
+class="total"
+id="totalPrice">
+
+Total: ₹0
+
+</div>
+
+</div>
+
+<script>
+
+/* CART */
+
+var total = 0;
+
+/* ADD CART */
+
+function addCart(product,price){
+
+var table =
+document.getElementById("cartTable");
+
+/* ROW */
+
+var row =
+table.insertRow(-1);
+
+/* CELLS */
+
+var cell1 =
+row.insertCell(0);
+
+var cell2 =
+row.insertCell(1);
+
+/* VALUES */
+
+cell1.innerHTML = product;
+
+cell2.innerHTML = "₹" + price;
+
+/* TOTAL */
+
+total = total + price;
+
+document.getElementById("totalPrice")
+.innerHTML =
+"Total: ₹" + total;
+
+/* LOCAL STORAGE */
+
+var cart =
+JSON.parse(
+localStorage.getItem("AuraGBCart")
+) || [];
+
+cart.push({
+
+product:product,
+price:price
+
+});
+
+localStorage.setItem(
+"AuraGBCart",
+JSON.stringify(cart)
+);
+
+}
+
+/* LOAD STORAGE */
+
+window.onload = function(){
+
+var cart =
+JSON.parse(
+localStorage.getItem("AuraGBCart")
+) || [];
+
+for(var i=0;i<cart.length;i++){
+
+var table =
+document.getElementById("cartTable");
+
+var row =
+table.insertRow(-1);
+
+var cell1 =
+row.insertCell(0);
+
+var cell2 =
+row.insertCell(1);
+
+cell1.innerHTML =
+cart[i].product;
+
+cell2.innerHTML =
+"₹" + cart[i].price;
+
+total =
+total + cart[i].price;
+
+}
+
+document.getElementById("totalPrice")
+.innerHTML =
+"Total: ₹" + total;
+
+}
+
+</script>
+
+</body>
+
+</html>
